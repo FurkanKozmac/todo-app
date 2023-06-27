@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import TaskListScreen from "./src/screens/TaskListScreen";
+import AddTaskScreen from "./src/screens/AddTaskScreen";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="TaskListScreen">
+          <Stack.Screen
+            name="TaskListScreen"
+            component={TaskListScreen}
+            options={{ title: "To Do App" }}
+          />
+          <Stack.Screen
+            name="AddTaskScreen"
+            component={AddTaskScreen}
+            options={{ title: "Create a task" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
